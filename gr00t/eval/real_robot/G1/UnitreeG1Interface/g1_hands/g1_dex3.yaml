@@ -1,0 +1,42 @@
+# =============================================================================
+# Dex3-1 Hand Configuration
+# =============================================================================
+
+# Number of motors per hand
+num_motors: 7
+
+# DDS Topics
+topics:
+  left_cmd: "rt/dex3/left/cmd"
+  left_state: "rt/dex3/left/state"
+  right_cmd: "rt/dex3/right/cmd"
+  right_state: "rt/dex3/right/state"
+
+# Control frequency
+control:
+  frequency: 100  # Hz
+  dt: 0.01        # seconds
+
+# PD Gains (per motor)
+# Motor 0 (thumb) has higher Kp for stability
+kp: [2.0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+kd: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+
+# Joint limits (radians)
+limits:
+  left:
+    max: [1.05, 1.05, 1.75, 0.0, 0.0, 0.0, 0.0]
+    min: [-1.05, -0.72, 0.0, -1.57, -1.75, -1.57, -1.75]
+  right:
+    max: [1.05, 0.74, 0.0, 1.57, 1.75, 1.57, 1.75]
+    min: [-1.05, -1.05, -1.75, 0.0, 0.0, 0.0, 0.0]
+
+# Preset positions (radians)
+presets:
+  open: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  
+  grasp_left: [0.8, 0.5, 0.5, -1.0, -1.0, -1.0, -1.0]
+  grasp_right: [0.8, -0.5, -0.5, 1.0, 1.0, 1.0, 1.0]
+  
+  pinch_left: [0.8, 0.3, 0.0, -0.8, 0.0, 0.0, 0.0]
+  pinch_right: [0.8, -0.3, 0.0, 0.8, 0.0, 0.0, 0.0]

@@ -1,0 +1,6 @@
+[project]
+name = "gr00t-eval-g1"
+version = "0.1.0"
+description = "GR00T Policy Evaluation for Unitree G1"
+requires-python = ">=3.10"
+dependencies = []

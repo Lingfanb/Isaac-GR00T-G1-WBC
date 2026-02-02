@@ -1,0 +1,224 @@
+# =============================================================================
+# G1 Robot Hardware Configuration
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Network Configuration
+# -----------------------------------------------------------------------------
+network:
+  robot_ip: "192.168.123.164"
+  interface: "eno2"  # DDS interface
+
+# -----------------------------------------------------------------------------
+# Joint Indices (29 motors total)
+# -----------------------------------------------------------------------------
+joint_indices:
+  # Legs (0-11)
+  LeftHipPitch: 0
+  LeftHipRoll: 1
+  LeftHipYaw: 2
+  LeftKnee: 3
+  LeftAnklePitch: 4
+  LeftAnkleRoll: 5
+  RightHipPitch: 6
+  RightHipRoll: 7
+  RightHipYaw: 8
+  RightKnee: 9
+  RightAnklePitch: 10
+  RightAnkleRoll: 11
+  
+  # Waist (12-14)
+  WaistYaw: 12
+  WaistRoll: 13
+  WaistPitch: 14
+  
+  # Left Arm (15-21)
+  LeftShoulderPitch: 15
+  LeftShoulderRoll: 16
+  LeftShoulderYaw: 17
+  LeftElbow: 18
+  LeftWristRoll: 19
+  LeftWristPitch: 20
+  LeftWristYaw: 21
+  
+  # Right Arm (22-28)
+  RightShoulderPitch: 22
+  RightShoulderRoll: 23
+  RightShoulderYaw: 24
+  RightElbow: 25
+  RightWristRoll: 26
+  RightWristPitch: 27
+  RightWristYaw: 28
+
+# -----------------------------------------------------------------------------
+# Joint Configuration (29 motors)
+# -----------------------------------------------------------------------------
+joints:
+  num_motors: 29
+  
+  # Leg motors (0-11)
+  legs:
+    indices: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    left: [0, 1, 2, 3, 4, 5]   # LeftHip(P/R/Y), LeftKnee, LeftAnkle(P/R)
+    right: [6, 7, 8, 9, 10, 11]
+    kp:
+      - 60   # LeftHipPitch
+      - 60   # LeftHipRoll
+      - 60   # LeftHipYaw
+      - 100  # LeftKnee
+      - 40   # LeftAnklePitch
+      - 40   # LeftAnkleRoll
+      - 60   # RightHipPitch
+      - 60   # RightHipRoll
+      - 60   # RightHipYaw
+      - 100  # RightKnee
+      - 40   # RightAnklePitch
+      - 40   # RightAnkleRoll
+    kd:
+      - 1    # LeftHipPitch
+      - 1    # LeftHipRoll
+      - 1    # LeftHipYaw
+      - 2    # LeftKnee
+      - 1    # LeftAnklePitch
+      - 1    # LeftAnkleRoll
+      - 1    # RightHipPitch
+      - 1    # RightHipRoll
+      - 1    # RightHipYaw
+      - 2    # RightKnee
+      - 1    # RightAnklePitch
+      - 1    # RightAnkleRoll
+  
+  # Waist motors (12-14)
+  waist:
+    indices: [12, 13, 14]  # Yaw, Roll, Pitch
+    kp:
+      - 60   # WaistYaw
+      - 40   # WaistRoll
+      - 40   # WaistPitch
+    kd:
+      - 1    # WaistYaw
+      - 1    # WaistRoll
+      - 1    # WaistPitch
+    locked: false  # Set true for 23dof model
+  
+  # Arm motors (15-28)
+  arms:
+    indices: [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]
+    left: [15, 16, 17, 18, 19, 20, 21]  # Shoulder(P/R/Y), Elbow, Wrist(R/P/Y)
+    right: [22, 23, 24, 25, 26, 27, 28]
+    kp:
+      - 40   # LeftShoulderPitch
+      - 40   # LeftShoulderRoll
+      - 40   # LeftShoulderYaw
+      - 40   # LeftElbow
+      - 40   # LeftWristRoll
+      - 40   # LeftWristPitch
+      - 40   # LeftWristYaw
+      - 40   # RightShoulderPitch
+      - 40   # RightShoulderRoll
+      - 40   # RightShoulderYaw
+      - 40   # RightElbow
+      - 40   # RightWristRoll
+      - 40   # RightWristPitch
+      - 40   # RightWristYaw
+    kd:
+      - 1    # LeftShoulderPitch
+      - 1    # LeftShoulderRoll
+      - 1    # LeftShoulderYaw
+      - 1    # LeftElbow
+      - 1    # LeftWristRoll
+      - 1    # LeftWristPitch
+      - 1    # LeftWristYaw
+      - 1    # RightShoulderPitch
+      - 1    # RightShoulderRoll
+      - 1    # RightShoulderYaw
+      - 1    # RightElbow
+      - 1    # RightWristRoll
+      - 1    # RightWristPitch
+      - 1    # RightWristYaw
+
+  # Default standing position (radians)
+  default_position:
+    legs: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    waist: [0.0, 0.0, 0.0]
+    arms: [0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.2, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+# -----------------------------------------------------------------------------
+# Hand Configuration (Dex3-1)
+# -----------------------------------------------------------------------------
+hands:
+  enabled: true
+  type: "dex3-1"
+  config_file: "g1_hands/g1_dex3.yaml"
+  
+  left:
+    num_joints: 7
+  
+  right:
+    num_joints: 7
+
+# -----------------------------------------------------------------------------
+# Camera Configuration
+# -----------------------------------------------------------------------------
+cameras:
+  enabled: true
+  
+  head:
+    name: "head_camera"
+    resolution: [640, 480]
+    fps: 30
+    device_id: 0  # or device path
+
+# -----------------------------------------------------------------------------
+# Joystick / Remote Controller
+# -----------------------------------------------------------------------------
+joystick:
+  enabled: true
+  type: "unitree_remote"  # Unitree wireless controller
+  
+  # Button indices (from wireless_remote data parsing)
+  button_indices:
+    R1: 0       # data1 bit 0
+    L1: 1       # data1 bit 1
+    Start: 2    # data1 bit 2
+    Select: 3   # data1 bit 3
+    R2: 4       # data1 bit 4
+    L2: 5       # data1 bit 5
+    F1: 6       # data1 bit 6
+    F3: 7       # data1 bit 7
+    A: 8        # data2 bit 0
+    B: 9        # data2 bit 1
+    X: 10       # data2 bit 2
+    Y: 11       # data2 bit 3
+    Up: 12      # data2 bit 4
+    Right: 13   # data2 bit 5
+    Down: 14    # data2 bit 6
+    Left: 15    # data2 bit 7
+  
+  # Axis indices (byte offset in wireless_remote)
+  axis_indices:
+    Lx: 4       # Left stick X (bytes 4-7)
+    Rx: 8       # Right stick X (bytes 8-11)
+    Ry: 12      # Right stick Y (bytes 12-15)
+    Ly: 20      # Left stick Y (bytes 20-23)
+  
+  # Button mappings for control
+  buttons:
+    start_policy: "Start"      # Start autonomous control
+    stop_policy: "Select"      # Stop and return to manual
+    emergency_stop: "L1"       # Emergency stop
+    reset_position: "R1"       # Return to default position
+  
+  # Axis mappings (for manual locomotion control)
+  axes:
+    forward_back: "Ly"   # Left stick Y
+    left_right: "Lx"     # Left stick X
+    turn: "Rx"           # Right stick X
+
+# -----------------------------------------------------------------------------
+# Control Parameters
+# -----------------------------------------------------------------------------
+control:
+  frequency: 1000  # Hz (control loop)
+  dt: 0.001        # seconds
+  mode_pr: 0       # 0: PR mode, 1: AB mode (for ankle)

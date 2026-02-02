@@ -1,0 +1,91 @@
+# =============================================================================
+# G1 GR00T Policy Configuration
+# =============================================================================
+# Defines the observation and action spaces for GR00T VLA integration.
+
+# -----------------------------------------------------------------------------
+# Observation Space
+# -----------------------------------------------------------------------------
+observation:
+  # State components to include
+  state:
+    left_arm:
+      enabled: true
+      dim: 7
+      source: "motor_positions"  # From G1RobotInterface
+      indices: [15, 16, 17, 18, 19, 20, 21]  # G1 joint indices
+      
+    right_arm:
+      enabled: true
+      dim: 7
+      source: "motor_positions"
+      indices: [22, 23, 24, 25, 26, 27, 28]
+    
+    left_hand:
+      enabled: true
+      dim: 7
+      source: "hand_positions"  # From Dex3HandInterface
+      
+    right_hand:
+      enabled: true
+      dim: 7
+      source: "hand_positions"
+  
+  # Camera inputs
+  video:
+    head:
+      enabled: true
+      source_key: "head_camera"  # Key in observation dict
+      resolution: [640, 480]
+    
+    # wrist:
+    #   enabled: false
+    #   source_key: "wrist_camera"
+    #   resolution: [640, 480]
+
+  # Language instruction
+  language:
+    key: "annotation.human.task_description"
+    source_key: "lang"  # Key in observation dict
+
+# -----------------------------------------------------------------------------
+# Action Space
+# -----------------------------------------------------------------------------
+action:
+  # Action components from GR00T output
+  left_arm:
+    enabled: true
+    dim: 7
+    target_indices: [15, 16, 17, 18, 19, 20, 21]  # G1 joint indices
+    
+  right_arm:
+    enabled: true
+    dim: 7
+    target_indices: [22, 23, 24, 25, 26, 27, 28]
+  
+  left_hand:
+    enabled: true
+    dim: 7
+    
+  right_hand:
+    enabled: true
+    dim: 7
+
+# -----------------------------------------------------------------------------
+# Policy Server
+# -----------------------------------------------------------------------------
+policy:
+  host: "localhost"
+  port: 5555
+  action_horizon: 8  # Number of action steps to execute per inference
+
+# -----------------------------------------------------------------------------
+# Control
+# -----------------------------------------------------------------------------
+control:
+  # Frequency for executing actions (Hz)
+  action_frequency: 30
+  
+  # Smoothing factor for action interpolation (0-1)
+  # Higher = faster response, lower = smoother
+  smoothing: 0.8
